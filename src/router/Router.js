@@ -10,6 +10,7 @@ import Products from "../components/Products/Products";
 import Main from "../layout/Main/Main";
 import { productsAndCartLoader } from "../loaders/productAndCartLoader";
 import Home from "../pages/Home/Home";
+import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 const routes = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const routes = createBrowserRouter([
           return fetch("emajhonProducts.json");
         },
         element: <Products />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
 
       {
