@@ -10,6 +10,7 @@ import Products from "../components/Products/Products";
 import Main from "../layout/Main/Main";
 import { productsAndCartLoader } from "../loaders/productAndCartLoader";
 import Home from "../pages/Home/Home";
+import Register from "../pages/Register/Register";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +42,7 @@ const routes = createBrowserRouter([
 
       {
         path: "/register",
-        element: <div>register</div>,
+        element: <Register></Register>,
       },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
