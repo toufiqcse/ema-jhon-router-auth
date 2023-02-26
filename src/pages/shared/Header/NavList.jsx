@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const NavList = ({nav}) => {
     // console.log(nav);
@@ -7,7 +7,8 @@ const NavList = ({nav}) => {
     return (
         <div>
             <div className='py-6 xl:text-xl mr-4 font-bold text-slate-500 hidden md:block'>
-                <NavLink className={({isActive}) => isActive ? 'text-purple-700 duration-300 ease-out' : undefined} to={path}>{Name}</NavLink>               
+                <NavLink className={({isActive}) => isActive ? 'text-purple-700 duration-300 ease-out' : undefined} to={path}>{Name}</NavLink> 
+                            
             </div>
         </div>
     );

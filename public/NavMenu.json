@@ -4,6 +4,6 @@
     {"id": "103", "Name": "Products", "path": "/products"},
     {"id": "104", "Name": "Inventory", "path": "/inventory"},
     {"id": "105", "Name": "About", "path": "/about"},
-    {"id": "106", "Name": "Contact", "path": "/contact"},
-    {"id": "107", "Name": "Register", "path": "/register"}
+    {"id": "106", "Name": "Contact", "path": "/contact"}
+    
 ]

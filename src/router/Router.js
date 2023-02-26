@@ -12,6 +12,8 @@ import { productsAndCartLoader } from "../loaders/productAndCartLoader";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import Shipping from "../pages/Shipping/Shipping";
+import PrivateRoute from "./PrivateRoute";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -54,6 +56,15 @@ const routes = createBrowserRouter([
       {
         path: "order",
         element: <ReviewOrder />,
+      },
+      {
+        path: "/shipping",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Shipping></Shipping>{" "}
+          </PrivateRoute>
+        ),
       },
     ],
   },

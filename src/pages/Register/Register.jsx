@@ -1,9 +1,72 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {FaUserAlt} from 'react-icons/fa'
 import {MdAlternateEmail} from 'react-icons/md'
 import {BsFillShieldLockFill} from 'react-icons/bs'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider';
+
 const Register = () => {
+
+    // receive props from context api
+    const {createUser,emailverify} = useContext(AuthContext)
+    // declare state for set any error message
+    const [error, setError] = useState(null)
+
+    // redirect
+    const navigate = useNavigate() 
+    // get form data
+    const handleRegister = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(name, email, password);
+
+
+        // password validation
+        if (!/(?=.*[!@#$&*])/.test(password)) {
+            setError('Please add at least one special character')
+            return;
+        }
+        if (!/(?=.*[0-9])/.test(password)) {
+            setError('Please provide at least one digit')
+            return;
+        }
+        if (!/.{8}/.test(password)) {
+            setError('Password should be at least 8 characters')
+            return;
+        }
+        
+        else {
+            setError('');
+        }
+
+        // create a new user
+        createUser(email, password)
+        .then(result => {
+            const user = result.user;
+            console.log(user);
+            form.reset()
+            handleEmailVerification();
+            // verification notification send by alert
+            alert("Email Verifivation send please check your email and login")
+            navigate('/login')
+        })
+        .catch(error => {
+            console.error(error)
+        })
+
+    }
+
+
+    // handle email verification
+    const handleEmailVerification = () => {
+        emailverify()
+        .then(() => {})
+        .catch(error => console.error(error))
+    }
+
     return (
         <div className='relative'>
             <img 
@@ -12,7 +75,7 @@ const Register = () => {
             className='w-full h-full object-cover absolute inset-0' 
             />
 
-           <div className='relative bg-purple-500 opacity-80'>
+           <div className='relative '>
             <div className='relative px-4 py-6 mx-auto overflow-hidden sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
                 <div className='flex flex-col items-center justify-center'>
                    
@@ -21,7 +84,7 @@ const Register = () => {
                                 <h3 className='sm:text-center text-xl font-semibold mb-4 sm:mb-6 '>Please Register</h3>
 
 
-                                <form>
+                                <form onSubmit={handleRegister}>
                                     {/* name field */}
                                     <div className='mb-2 '>
                                         <label 
@@ -89,6 +152,8 @@ const Register = () => {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <p className='text-red-500  text-sm'>{error}</p>
 
                                     {/* button for submit */}
 

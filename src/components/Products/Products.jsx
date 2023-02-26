@@ -1,20 +1,24 @@
 // @ts-nocheck
-import React, { useState ,useEffect} from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { addToDb, deleteShoppingCart, getShoppingCart } from '../../Utilities/fakedb';
-import CartsPRoducts from './CartsPRoducts';
-import Product from './Product';
+import React, { useState, useEffect } from "react";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  addToDb,
+  deleteShoppingCart,
+  getShoppingCart,
+} from "../../Utilities/fakedb";
+import CartsPRoducts from "./CartsPRoducts";
+import Product from "./Product";
 
 const Products = () => {
-    const products = useLoaderData()
-    const [carts, setCart] = useState([]);
+  const products = useLoaderData();
+  const [carts, setCart] = useState([]);
 
-    // remove cart 
-    const clearCart =() =>{
-      setCart([]);
-      deleteShoppingCart()
-    }
-    //load data from local storage by the fake Db
+  // remove cart
+  const clearCart = () => {
+    setCart([]);
+    deleteShoppingCart();
+  };
+  //load data from local storage by the fake Db
   useEffect(() => {
     const StoredCart = getShoppingCart();
     // console.log(StoredCart);
@@ -35,7 +39,7 @@ const Products = () => {
   //   add to Cart
   const addToCart = (selectedProduct) => {
     let newCart = [];
-    
+
     const exists = carts.find((product) => product.id === selectedProduct.id);
     if (!exists) {
       selectedProduct.quantity = 1;
@@ -49,28 +53,34 @@ const Products = () => {
     addToDb(selectedProduct.id);
   };
 
-
-    return (
-        <div className='z-10'>
-            <h1 className='text-center text-3xl mt-20'>This is Products  Page</h1>
-            <div className='grid grid-cols-4 '>
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 mx-4  my-3 col-span-3'>
-                {
-                    products.map(product => <Product key={product.id} addToCart={addToCart}  product={product}></Product>)
-                }
-                </div>
-            <div className=''>
-                <div className='bg-green-100'>
-                    <div className='text-center text-2xl text-slate-500 font-bold py-4'>
-                        Order Summary
-                    </div>
-                    <CartsPRoducts carts={carts} clearCart={clearCart}></CartsPRoducts>
-                    
-                </div>
-            </div>
-            </div>
+  return (
+    <div className="z-10">
+      <h1 className="text-center text-3xl mt-20">This is Products Page</h1>
+      <div className="grid grid-cols-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 mx-4  my-3 col-span-3">
+          {products.map((product) => (
+            <Product
+              key={product.id}
+              addToCart={addToCart}
+              product={product}
+            ></Product>
+          ))}
         </div>
-    );
+        <div className="">
+          <div className="bg-green-100">
+            <div className="text-center text-2xl text-slate-500 font-bold py-4">
+              Order Summary
+            </div>
+            <CartsPRoducts carts={carts} clearCart={clearCart}>
+              <Link to="/order" className="bg-green-500 p-1 text-white">
+                <button>Review Order</button>
+              </Link>
+            </CartsPRoducts>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Products;
